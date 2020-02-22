@@ -13,6 +13,7 @@ function drawGrid() {
     clearGrid();
     makeRows(size);
     makeColumns(size);
+    addListen();
 };
 
 function makeRows(rowNumber) {
@@ -27,11 +28,14 @@ function makeColumns(colNumber) {
         for (i = 0; i < colNumber; i++) {
             let colCell = document.createElement("div");
             colCell.style.height = (scale / size) + 'px' 
-            colCell.style.width = (scale / size) + 'px' 
+            colCell.style.width = (scale / size) + 'px'
             rows[i].appendChild(colCell).className = "cell";
         };
     };
 };
+
+
+
 
 function clearGrid() {
     while (grid.firstChild) {
@@ -40,8 +44,29 @@ function clearGrid() {
 }
 
 function promptMe(){
-    size = prompt("How many squares?","");
-    drawGrid();       
+    size = prompt("How many squares? (Between 2-66)","");
+    if (size >= 2 && size <= 66) {
+        drawGrid(); 
+    } else {
+        alert("Try again");
+        promptMe()
+    }
+          
 };
 
 drawGrid()
+
+function addListen() {
+const square = document.querySelectorAll('.cell');
+  square.forEach((square) => {
+    square.addEventListener('mouseover', () => {
+      square.style.backgroundColor = "black";
+      opacity = square.style.opacity;
+      if(opacity < 1) {
+          square.style.opacity = Number(opacity) + 0.1;
+      }
+    });
+  });
+};
+
+
